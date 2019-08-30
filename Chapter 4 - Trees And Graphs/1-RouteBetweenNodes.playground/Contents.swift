@@ -3,7 +3,6 @@ import UIKit
 // Given a directed graph, design an algorithm to find out whether there is a route between two nodes.
 
 var explored = Set<Vertex<Int>>()
-var found = false
 
 //Using the recursive DFS
 
@@ -16,11 +15,13 @@ func dfs(graph: Graph<Int>, start: Vertex<Int>, end: Vertex<Int>) -> Bool {
     
     for node in graph.edges[start, default: []] {
         if !explored.contains(node) {
-            found = found || dfs(graph: graph, start: node, end: end)
+            if dfs(graph: graph, start: node, end: end) {
+                return true
+            }
         }
     }
     
-    return found
+    return false
 }
 
 
@@ -31,7 +32,6 @@ let end = Vertex(data: 4)
 let result = dfs(graph: graph, start: start, end: end)
 
 explored = []
-found = false
 
 let graph2 = read(from: "input2")
 let start2 = Vertex(data: 1)
